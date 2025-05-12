@@ -13,7 +13,7 @@ I built this to lay the foundation for interacting with the OpenAI API. The user
 
 ---
 
-## 🚀 Smart Predictions Based on Custom Data
+## 🚀 Build-Up Possibilities: Smart Predictions Based on Custom Data
 
 ### 1. Custom Context Memory (Short-Term Memory)
 Enable the AI to remember recent interactions during a session by:
