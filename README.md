@@ -1,6 +1,6 @@
 # simple-ai-logic
 
-I built this to lay the foundation for interacting with the OpenAI API—where a simple user input sparks intelligent, meaningful output. It's a first step toward turning ideas into limitless possibilities.
+I built this to lay the foundation for interacting with the OpenAI API. The user inputs, and the AI outputs. Due to a limit of AI credits, the demo will be shared privately, but feel free to clone this project and make it your own.
 
 ## ✅ Features
 
