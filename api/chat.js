@@ -16,8 +16,17 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+
+    // ✅ Add this to inspect what OpenAI is actually returning
+    console.log("OpenAI raw response:", data);
+
+    if (!data.choices) {
+      return res.status(500).json({ error: "Missing choices in OpenAI response", details: data });
+    }
+
     res.status(200).json(data);
   } catch (error) {
-    res.status(500).json({ error: "Something went wrong" });
+    console.error("OpenAI API error:", error);
+    res.status(500).json({ error: "OpenAI request failed", detail: error.message });
   }
 }
