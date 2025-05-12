@@ -144,9 +144,16 @@
         });
 
         const data = await response.json();
+        console.log("API Response:", data); // ✅ Log it for debugging
+
+        if (!data.choices || !data.choices[0]) {
+          output.innerText = "No valid response from AI. Check your API key and quota.";
+          return;
+        }
+
         output.innerText = data.choices[0].message.content.trim();
       } catch (error) {
-        console.error(error);
+        console.error("Fetch error:", error);
         output.innerText = "Oops! Something went wrong.";
       }
 
