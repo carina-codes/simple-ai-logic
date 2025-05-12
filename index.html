@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple AI Logic</title>
+  <style>
+    * {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-smooth: always;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      cursor: default;
+    }
+
+    body {
+      min-height: 100vh;
+      align-content: center;
+    }
+
+    .demo {
+      width: 800px;
+      max-width: 100%;
+      margin: auto;
+      padding: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 25px 0;
+    }
+
+    button {
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: 1px solid;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      cursor: pointer;
+      background-color: black;
+      color: white;
+    }
+
+    #input {
+      display: flex;
+      gap: 5px;
+    }
+
+    #userInput {
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid;
+      flex-grow: 1;
+    }
+
+    #userInput:hover {
+      cursor: pointer;
+    }
+
+    #output {
+      height: 450px;
+      width: 100%;
+      border: 1px solid;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 15px;
+      overflow-y: scroll;
+      scrollbar-width: auto;
+      scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    }
+
+    #output::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #output::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #output::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      border: 0;
+    }
+
+    .cred {
+      text-align: center;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo">
+    <h1>Simple AI Logic Demo</h1>
+
+    <div id="output"></div>
+
+    <div id="input">
+      <label for="userInput" class="visually-hidden">Ask me something:</label>
+      <input type="text" id="userInput" placeholder="Ask me something..." />
+      <button onclick="processInput()">Submit</button>
+    </div>
+
+    <div class="cred">
+      <span>Built by Carina Codes</span>
+    </div>
+  </div>
+
+  <script>
+    async function processInput() {
+      const inputField = document.getElementById("userInput");
+      const input = inputField.value.trim();
+      const output = document.getElementById("output");
+
+      if (!input) {
+        output.innerText = "Please enter something!";
+        return;
+      }
+
+      output.innerText = "Thinking...";
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: input }),
+        });
+
+        const data = await response.json();
+        output.innerText = data.choices[0].message.content.trim();
+      } catch (error) {
+        console.error(error);
+        output.innerText = "Oops! Something went wrong.";
+      }
+
+      inputField.value = "";
+    }
+
+    document
+      .getElementById("userInput")
+      .addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          processInput();
+        }
+      });
+  </script>
+</body>
+</html>
